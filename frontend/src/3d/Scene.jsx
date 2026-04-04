@@ -10,7 +10,10 @@ import AlgorithmAnimator from './AlgorithmAnimator';
 
 const CameraController = ({ viewMode }) => {
   const { camera, gl } = useThree();
-  const controlsRef = useRef();
+  const controlsRef = useRef();  
+
+
+  
 
   useEffect(() => {
     if (viewMode === '2D') {
