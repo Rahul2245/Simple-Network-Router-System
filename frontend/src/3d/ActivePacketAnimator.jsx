@@ -9,7 +9,7 @@ const ActivePacketAnimator = ({ source, target, viewMode, onComplete }) => {
   
   // Animation state
   const progress = useRef(0);
-  const speed = 1.5; // units per second approx
+  const speed = 5; // units per second approx
 
   const startPos = useMemo(() => new THREE.Vector3(
     source.position?.x || 0,

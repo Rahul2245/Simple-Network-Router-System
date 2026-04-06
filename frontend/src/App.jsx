@@ -55,7 +55,7 @@ function App() {
     });
 
     socket.on('packet_init', (pkt) => setActivePacket(pkt));
-    
+  
     socket.on('packet_decision', (data) => {
       setActivePacket(data.packet);
       setDecisionData(data);

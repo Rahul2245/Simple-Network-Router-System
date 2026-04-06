@@ -18,18 +18,21 @@ const PacketAnimator = ({ source, target, viewMode }) => {
     target.position?.z || 0
   ), [target, viewMode]);
 
-  // Individual packet speed and offset so they don't all sync exactly
-  const speed = useMemo(() => 0.5 + Math.random() * 0.5, []);
-  const offset = useMemo(() => Math.random() * Math.PI * 2, []);
+ 
+const speed = useMemo(() => 4.5 + Math.random() * 4.5, []);
+const offset = useMemo(() => Math.random() * Math.PI * 2, []);
 
-  useFrame(({ clock }) => {
-    if (packetRef.current) {
-      const time = clock.getElapsedTime();
-      // Calculate interpolation factor (0 to 1) using a sine wave
-      const t = (Math.sin(time * speed + offset) + 1) / 2;
-      packetRef.current.position.lerpVectors(p1, p2, t);
-    }
-  });
+useFrame(({ clock }) => {
+  if (packetRef.current) {
+    const time = clock.getElapsedTime();
+
+    // Interpolation factor (0 → 1) using sine wave
+    const t = (Math.sin(time * speed + offset) + 1) / 2;
+
+    // Move between p1 and p2
+    packetRef.current.position.lerpVectors(p1, p2, t);
+  }
+});
 
   return (
     <Sphere ref={packetRef} args={[0.15, 8, 8]}>
