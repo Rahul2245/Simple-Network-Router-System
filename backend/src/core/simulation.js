@@ -1,5 +1,5 @@
 // backend/src/core/simulation.js
-const { runDistanceVectorStep, MAX_COST } = require('../algorithms/distanceVector');
+const { runDistanceVectorStep } = require('../algorithms/distanceVector');
 const { runLinkStateStep } = require('../algorithms/linkState');
 
 class Simulation {
@@ -63,7 +63,7 @@ class Simulation {
     // Use routing table to find next hop
     const routingEntry = node.routingTable[packet.dest];
 
-    if (!routingEntry || !routingEntry.nextHop || routingEntry.cost >= MAX_COST) {
+    if (!routingEntry || !routingEntry.nextHop || routingEntry.cost === Infinity) {
       packet.status = 'dropped';
       this.io.emit('packet_dropped', { packet, reason: 'No route to destination.' });
       this.io.emit('log', `Packet ${packetId} dropped at ${packet.currentNode}! No route to ${packet.dest}.`);
@@ -191,14 +191,6 @@ class Simulation {
           });
         }, 1500); // Wait for frontend visual flooding/exchange to finish
       }
-
-      // --- Triggered Updates ---
-      // If any nodes had significant route changes, run additional
-      // convergence steps immediately rather than waiting for the next tick.
-      if (this.algorithm === 'distanceVector' && result.triggeredNodes && result.triggeredNodes.length > 0) {
-        this.io.emit('log', `Triggered update fired by: ${result.triggeredNodes.join(', ')}`);
-        this._runTriggeredUpdates();
-      }
     }
 
     // Schedule next tick
@@ -207,25 +199,6 @@ class Simulation {
 
   broadcastState() {
     this.io.emit('graph_state', this.graph.serializeState());
-  }
-
-  /**
-   * Run up to MAX_TRIGGERED_ROUNDS extra convergence steps so that
-   * route-failure cascades settle quickly instead of waiting for
-   * the periodic tick timer.
-   */
-  _runTriggeredUpdates(maxRounds = 5) {
-    for (let i = 0; i < maxRounds; i++) {
-      const extra = runDistanceVectorStep(this.graph, this.metric);
-      if (!extra.hasChanges) break; // network has converged
-
-      extra.updates.forEach(update => {
-        this.io.emit('route_update', update);
-        if (update.msg) this.io.emit('log', update.msg);
-      });
-
-      this.broadcastState();
-    }
   }
 
   // Handle a direct route recalculation after an event
@@ -246,11 +219,6 @@ class Simulation {
           res.updates.forEach(update => {
             this.io.emit('route_update', update);
           });
-
-          // Fire triggered updates for DV after a topology change
-          if (this.algorithm === 'distanceVector' && res.triggeredNodes && res.triggeredNodes.length > 0) {
-            this._runTriggeredUpdates();
-          }
         }
       }, 1500);
     } else {

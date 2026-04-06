@@ -6,8 +6,7 @@ const cors = require('cors');
 
 const Graph = require('./core/graph');
 const Simulation = require('./core/simulation');
-const HistoryManager = require('./core/history');
-const { MAX_COST } = require('./algorithms/distanceVector');
+const HistoryManager = require('./core/history')
 
 const app = express();
 app.use(cors());
@@ -95,12 +94,11 @@ io.on('connection', (socket) => {
 
   socket.on('toggle_link_status', ({ source, target, status }) => {
     graph.updateLinkStatus(source, target, status);
+    // simulation.handleTopologyChange(`Link ${source}-${target} is now ${status}`);
     io.emit('log', `Link ${source}-${target} is now ${status}`);
     simulation.broadcastState();
-
-    // Trigger immediate reconvergence so nodes detect the failure
-    // without waiting for the next periodic tick.
-    simulation.handleTopologyChange(`Link ${source}-${target} toggled to ${status} – triggered update.`);
+    
+    // In distance vector, node detects physical link down immediately. But algorithm logic processes it.
   });
 
   socket.on('disconnect', () => {
