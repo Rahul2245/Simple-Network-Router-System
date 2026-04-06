@@ -15,7 +15,7 @@ const Header = () => {
       
       <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-400">
         <a href="#" className="hover:text-accentGreen text-accentGreen transition-colors border-b-2 border-accentGreen pb-1">Topology</a>
-        <a href="#" className="hover:text-gray-200 transition-colors border-b-2 border-transparent pb-1">Settings</a>
+    
       </nav>
     </header>
   );
