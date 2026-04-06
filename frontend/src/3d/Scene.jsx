@@ -62,8 +62,9 @@ const Scene = ({
   const handlePlanePointerDown = (e) => {
     if (interactionMode === 'ADD_NODE') {
       const id = `R${Date.now().toString().slice(-4)}`;
+      const yOffset = viewMode === '3D' ? (Math.random() * 6 - 3) : 0;
       onAction('add_node', {
-        id, label: id, position: { x: e.point.x, y: 0, z: e.point.z }
+        id, label: id, position: { x: e.point.x, y: yOffset, z: e.point.z }
       });
     } else {
       onSelectNode(null);
@@ -92,8 +93,9 @@ const Scene = ({
         if (firstLinkNode.id !== node.id) {
           // Send link action (cost = physical distance for now, clamped)
           const dx = node.position.x - firstLinkNode.position.x;
+          const dy = (node.position.y || 0) - (firstLinkNode.position.y || 0);
           const dz = node.position.z - firstLinkNode.position.z;
-          const dist = Math.max(1, Math.round(Math.sqrt(dx*dx + dz*dz) / 2));
+          const dist = Math.max(1, Math.round(Math.sqrt(dx*dx + dy*dy + dz*dz) / 2));
           onAction('add_link', { source: firstLinkNode.id, target: node.id, cost: dist });
         }
         setFirstLinkNode(null);

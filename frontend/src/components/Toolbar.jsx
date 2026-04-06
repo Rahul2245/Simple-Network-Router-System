@@ -1,7 +1,7 @@
 import React from 'react';
-import { MousePointer2, Plus, Link as LinkIcon, Send, X } from 'lucide-react';
+import { MousePointer2, Plus, Link as LinkIcon, Send, X, Shuffle } from 'lucide-react';
 
-const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, activePacket, onSendPacket }) => {
+const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, activePacket, onSendPacket, onShuffleLayout }) => {
   const modes = [
     { id: 'VIEW', label: 'Inspect', icon: <MousePointer2 className="w-4 h-4" /> },
     { id: 'ADD_NODE', label: 'Add Node', icon: <Plus className="w-4 h-4" /> },
@@ -26,6 +26,16 @@ const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, ac
           </button>
         ))}
       </div>
+
+      <button
+        onClick={onShuffleLayout}
+        className="p-2 rounded-md transition-colors flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-accentGreen hover:bg-[#00ffa3]/10 border border-transparent hover:border-[#00ffa3]/30"
+        title="Shuffle 3D Layout"
+      >
+        <Shuffle className="w-4 h-4" />
+      </button>
+
+      <div className="w-px h-6 bg-[#2d333b]"></div>
       
       {interactionMode === 'SELECT_ROUTE' && (
          <div className="flex items-center gap-3 pl-1 text-xs px-2">

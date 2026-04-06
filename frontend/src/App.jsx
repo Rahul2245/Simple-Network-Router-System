@@ -105,6 +105,18 @@ function App() {
     socket.emit(action, payload);
   };
 
+  const handleShuffleLayout = () => {
+    const shuffled = graphState.nodes.map(node => ({
+      id: node.id,
+      position: {
+        x: Math.random() * 30 - 15,
+        y: Math.random() * 20 - 10,
+        z: Math.random() * 30 - 15,
+      }
+    }));
+    socket.emit('shuffle_layout', { nodes: shuffled });
+  };
+
   const handleSendPacket = () => {
     if (sourceNode && destNode) {
        handleAction('start_packet_flow', { source: sourceNode.id, dest: destNode.id });
@@ -172,6 +184,7 @@ function App() {
                 destNode={destNode}
                 activePacket={activePacket}
                 onSendPacket={handleSendPacket}
+                onShuffleLayout={handleShuffleLayout}
              />
 
              {/* Legend */}

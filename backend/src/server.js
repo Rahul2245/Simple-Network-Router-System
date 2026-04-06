@@ -157,6 +157,18 @@ io.on('connection', (socket) => {
   socket.on('redo_action', () => {
     history.redo();
   });
+
+  socket.on('shuffle_layout', ({ nodes: shuffledNodes }) => {
+    shuffledNodes.forEach(({ id, position }) => {
+      const node = graph.nodes.get(id);
+      if (node) {
+        node.position = position;
+      }
+    });
+    history.record();
+    io.emit('log', 'Layout shuffled to 3D positions.');
+    simulation.broadcastState();
+  });
   
   // --- PACKET FLOW ---
   socket.on('start_packet_flow', ({ source, dest }) => {

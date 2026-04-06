@@ -31,6 +31,7 @@ const RouterNode = ({ node, onClick, viewMode, isSource, isDest, isCurrent, isDr
   return (
     <group 
       position={pos} 
+      onPointerDown={(e) => e.stopPropagation()}
       onClick={(e) => { e.stopPropagation(); onClick && onClick(e); }} 
       onPointerOver={(e) => { e.stopPropagation(); setHover(true); }} 
       onPointerOut={(e) => { e.stopPropagation(); setHover(false); }}

@@ -10,14 +10,14 @@ class Simulation {
     this.metric = 'cost'; // cost, hop, delay
     this.isRunning = false;
     this.timer = null;
-    this.tickRate = 1000; // ms
+    this.tickRate = 100; // ms
     this.activePackets = new Map();
   }
 
   startPacketFlow(packetId, sourceId, destId) {
     const node = this.graph.nodes.get(sourceId);
     if (!node) return;
-    
+
     const packet = {
       id: packetId,
       source: sourceId,
@@ -28,11 +28,11 @@ class Simulation {
       status: 'routing', // 'routing', 'transit', 'reached', 'dropped'
       totalCost: 0
     };
-    
+
     this.activePackets.set(packetId, packet);
     this.io.emit('packet_init', packet);
     this.io.emit('log', `Packet ${packetId} originated at Node ${sourceId} destined for ${destId}.`);
-    
+
     // We immediately trigger the first routing decision visibly
     this.processPacketStep(packetId);
   }
@@ -62,7 +62,7 @@ class Simulation {
 
     // Use routing table to find next hop
     const routingEntry = node.routingTable[packet.dest];
-    
+
     if (!routingEntry || !routingEntry.nextHop || routingEntry.cost === Infinity) {
       packet.status = 'dropped';
       this.io.emit('packet_dropped', { packet, reason: 'No route to destination.' });
@@ -72,8 +72,8 @@ class Simulation {
     }
 
     const nextHopId = routingEntry.nextHop;
-    const link = this.graph.getAllLinks().find(l => 
-      (l.source === packet.currentNode && l.target === nextHopId) || 
+    const link = this.graph.getAllLinks().find(l =>
+      (l.source === packet.currentNode && l.target === nextHopId) ||
       (l.target === packet.currentNode && l.source === nextHopId)
     );
 
@@ -87,11 +87,11 @@ class Simulation {
 
     // Emit decision so frontend can highlight it and pause
     this.io.emit('packet_decision', {
-       packet,
-       decisionNode: packet.currentNode,
-       nextHop: nextHopId,
-       linkCost: link.cost,
-       logic: `Lookup table for ${packet.dest} -> Next Hop: ${nextHopId}`
+      packet,
+      decisionNode: packet.currentNode,
+      nextHop: nextHopId,
+      linkCost: link.cost,
+      logic: `Lookup table for ${packet.dest} -> Next Hop: ${nextHopId}`
     });
 
     // Keep packet in routing state. 
@@ -108,7 +108,7 @@ class Simulation {
     packet.ttl -= 1;
     packet.totalCost += linkCost;
     packet.status = 'transit';
-    
+
     // Emit transit start for the animator
     this.io.emit('packet_transit_start', packet);
   }
@@ -117,7 +117,7 @@ class Simulation {
   completePacketTransit(packetId) {
     const packet = this.activePackets.get(packetId);
     if (!packet) return;
-    
+
     packet.status = 'routing';
     this.processPacketStep(packetId);
   }
@@ -181,7 +181,7 @@ class Simulation {
       if (result.animation) {
         this.io.emit('algorithm_animation', result.animation);
       }
-      
+
       if (result.hasChanges) {
         setTimeout(() => {
           this.broadcastState();
@@ -206,23 +206,23 @@ class Simulation {
     this.io.emit('log', eventMsg);
     // Don't instantly broadcast state if we are going to calculate right now.
     if (!this.isRunning) {
-        const res = this.algorithm === 'distanceVector' ? 
-            runDistanceVectorStep(this.graph, this.metric) : runLinkStateStep(this.graph, this.metric);
-            
-        if (res.animation) {
-           this.io.emit('algorithm_animation', res.animation);
-        }
-        
-        setTimeout(() => {
-          this.broadcastState();
-          if (res.hasChanges) {
-            res.updates.forEach(update => {
-              this.io.emit('route_update', update);
-            });
-          }
-        }, 1500);
-    } else {
+      const res = this.algorithm === 'distanceVector' ?
+        runDistanceVectorStep(this.graph, this.metric) : runLinkStateStep(this.graph, this.metric);
+
+      if (res.animation) {
+        this.io.emit('algorithm_animation', res.animation);
+      }
+
+      setTimeout(() => {
         this.broadcastState();
+        if (res.hasChanges) {
+          res.updates.forEach(update => {
+            this.io.emit('route_update', update);
+          });
+        }
+      }, 1500);
+    } else {
+      this.broadcastState();
     }
   }
 }
