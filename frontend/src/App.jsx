@@ -20,6 +20,7 @@ function App() {
 
   // Interactive Topology States
   const [interactionMode, setInteractionMode] = useState('VIEW');
+  const [metric, setMetric] = useState('cost');
   const [sourceNode, setSourceNode] = useState(null);
   const [destNode, setDestNode] = useState(null);
   const [activePacket, setActivePacket] = useState(null);
@@ -160,6 +161,7 @@ function App() {
                 onSelectLink={(link) => { setSelectedLink(link); setSelectedNode(null); }}
                 selectedLink={selectedLink}
                 viewMode={viewMode} 
+                  metric={metric} 
                 onAction={handleAction} 
                 interactionMode={interactionMode}
                 sourceNode={sourceNode}
@@ -178,14 +180,16 @@ function App() {
              </div>
              
              <Toolbar 
-                interactionMode={interactionMode} 
-                setInteractionMode={setInteractionMode}
-                sourceNode={sourceNode}
-                destNode={destNode}
-                activePacket={activePacket}
-                onSendPacket={handleSendPacket}
-                onShuffleLayout={handleShuffleLayout}
-             />
+  interactionMode={interactionMode} 
+  setInteractionMode={setInteractionMode}
+  sourceNode={sourceNode}
+  destNode={destNode}
+  activePacket={activePacket}
+  onSendPacket={handleSendPacket}
+  onShuffleLayout={handleShuffleLayout}
+  metric={metric}              
+  setMetric={setMetric}        
+/>
 
              {/* Legend */}
              <div className="absolute top-4 right-4 bg-[#161b22]/90 border border-[#30363d] rounded-lg p-3 text-xs w-48 shadow-lg z-10 pointer-events-auto backdrop-blur-md">

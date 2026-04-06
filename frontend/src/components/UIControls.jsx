@@ -7,6 +7,8 @@ const UIControls = ({ onAction }) => {
   const [isRunning, setIsRunning] = useState(false);
 
   const handleStart = () => {
+    
+    
     onAction('start_simulation');
     setIsRunning(true);
   };
@@ -20,10 +22,14 @@ const UIControls = ({ onAction }) => {
     onAction('step_simulation');
   };
 
-  const handleReset = () => {
-    onAction('reset_simulation');
-    setIsRunning(false);
-  };
+const handleReset = () => {
+  onAction('reset_simulation');
+  setIsRunning(false);
+
+  setTimeout(() => {
+    setIsRunning(true);
+  }, 50);
+};
 
   const handleAlgoChange = (e) => {
     const val = e.target.value;

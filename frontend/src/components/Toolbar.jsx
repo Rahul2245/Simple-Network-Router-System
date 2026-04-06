@@ -1,7 +1,7 @@
 import React from 'react';
 import { MousePointer2, Plus, Link as LinkIcon, Send, X, Shuffle } from 'lucide-react';
 
-const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, activePacket, onSendPacket, onShuffleLayout }) => {
+const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, activePacket, onSendPacket, onShuffleLayout, metric, setMetric }) => {
   const modes = [
     { id: 'VIEW', label: 'Inspect', icon: <MousePointer2 className="w-4 h-4" /> },
     { id: 'ADD_NODE', label: 'Add Node', icon: <Plus className="w-4 h-4" /> },
@@ -36,6 +36,19 @@ const Toolbar = ({ interactionMode, setInteractionMode, sourceNode, destNode, ac
       </button>
 
       <div className="w-px h-6 bg-[#2d333b]"></div>
+      <div className="flex items-center gap-2 text-xs px-2">
+  <span className="text-gray-500 uppercase font-bold text-[10px]">Metric</span>
+  <select 
+    value={metric} 
+    onChange={(e) => setMetric(e.target.value)}
+    className="bg-[#1e2329] border border-[#30363d] text-white text-xs px-2 py-1 rounded focus:outline-none"
+  >
+    <option value="cost">Cost</option>
+    <option value="delay">Delay</option>
+  </select>
+</div>
+
+<div className="w-px h-6 bg-[#2d333b]"></div>
       
       {interactionMode === 'SELECT_ROUTE' && (
          <div className="flex items-center gap-3 pl-1 text-xs px-2">

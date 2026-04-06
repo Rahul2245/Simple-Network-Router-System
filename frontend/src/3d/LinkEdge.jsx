@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Line, Billboard, Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-const LinkEdge = ({ id, source, target, cost, status, viewMode, isSelected, onClick }) => {
+const LinkEdge = ({ id, source, target, cost, delay, metric, status, viewMode, isSelected, onClick }) =>  {
   const [hovered, setHover] = useState(false);
 
   // Flatten Y if 2D mode
@@ -66,7 +66,7 @@ const LinkEdge = ({ id, source, target, cost, status, viewMode, isSelected, onCl
             outlineWidth={0.04}
             outlineColor="#05080c"
           >
-            {cost}
+            {metric === 'delay' ? `${delay} ms` : cost}
           </Text>
         </Billboard>
       )}
