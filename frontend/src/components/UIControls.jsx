@@ -24,11 +24,17 @@ const UIControls = ({ onAction }) => {
 
 const handleReset = () => {
   onAction('reset_simulation');
-  setIsRunning(false);
+ 
+   setTimeout(() => {
+     onAction('pause_simulation');
+     setIsRunning(false);
+  }, 2000);
 
   setTimeout(() => {
+    onAction('start_simulation');
     setIsRunning(true);
-  }, 50);
+    
+  }, 2000);
 };
 
   const handleAlgoChange = (e) => {
