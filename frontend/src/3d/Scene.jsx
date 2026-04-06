@@ -42,7 +42,7 @@ const CameraController = ({ viewMode }) => {
 };
 
 const Scene = ({ 
-  graph, onSelectNode, onSelectLink, selectedLink, viewMode, onAction, 
+  graph, onSelectNode, onSelectLink, selectedLink, viewMode, metric, onAction, 
   interactionMode, sourceNode, destNode, setSourceNode, setDestNode, 
   activePacket, decisionData, algorithmAnimation, onAnimationComplete 
 }) => {
@@ -157,6 +157,8 @@ const Scene = ({
                  source={sNode} 
                  target={tNode} 
                  cost={link.cost} 
+                 delay={link.delay}
+                 metric={metric} 
                  status={link.status}
                  viewMode={viewMode}
                  isSelected={selectedLink?.id === link.id}
