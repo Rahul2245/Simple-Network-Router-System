@@ -20,7 +20,7 @@ Routing algorithms such as Link State and Distance Vector are fundamental to com
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 ![WhatsApp Image 2026-04-11 at 11 10 00 PM](https://github.com/user-attachments/assets/17e3961b-cf07-46de-b2de-1cd208a5d154)
 ![WhatsApp Image 2026-04-11 at 11 10 13 PM](https://github.com/user-attachments/assets/885f5cbb-a7a1-4f23-a4bc-b443ba0ce275)
@@ -117,19 +117,19 @@ git clone https://github.com/Rahul2245/Simple-Network-Router-System
 cd Simple-Network-Router-System
 ```
 
-2️ Backend Setup
+### 2️ Backend Setup
 ```bash
 cd backend
 npm install
 node server.js
 ```
-3️ Frontend Setup
+### 3️ Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-4️ Run Application
+### 4️ Run Application
 
 👉 http://localhost:3000
 
