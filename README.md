@@ -129,15 +129,15 @@ npm run dev
 
 👉 http://localhost:3000
 
-##🎓 Learning Outcomes
-Understanding routing algorithms (Dijkstra, Bellman-Ford, Link State)
-Practical application of graph theory
-Visualization of network behavior
+## 🎓 Learning Outcomes
+- Understanding routing algorithms (Dijkstra, Bellman-Ford, Link State)
+- Practical application of graph theory
+- Visualization of network behavior
 
 ---
 
-##👨‍💻 Team
-Rahul Gajula – 2024BCS-022
-Pathakota Zenith Reddy – 2024BCS-044
-Akshitha Muttangi – 2024BCS-038
-Raga Hasini Kalluri – 2024BCS-030
+## 👨‍💻 Team
+- Rahul Gajula – 2024BCS-022
+- Pathakota Zenith Reddy – 2024BCS-044
+- Akshitha Muttangi – 2024BCS-038
+- Raga Hasini Kalluri – 2024BCS-030
