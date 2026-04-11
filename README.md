@@ -21,7 +21,10 @@ Routing algorithms such as Link State and Distance Vector are fundamental to com
 ---
 
 ## 📸 Screenshots
-_Add your images here_
+![WhatsApp Image 2026-04-11 at 11 10 00 PM](https://github.com/user-attachments/assets/17e3961b-cf07-46de-b2de-1cd208a5d154)
+![WhatsApp Image 2026-04-11 at 11 10 13 PM](https://github.com/user-attachments/assets/885f5cbb-a7a1-4f23-a4bc-b443ba0ce275)
+
+
 
 ---
 
@@ -128,6 +131,8 @@ npm run dev
 4️⃣ Run Application
 
 👉 http://localhost:3000
+
+---
 
 ## 🎓 Learning Outcomes
 - Understanding routing algorithms (Dijkstra, Bellman-Ford, Link State)
