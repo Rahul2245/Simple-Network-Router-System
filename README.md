@@ -145,7 +145,7 @@ npm run dev
 
 ---
 
-##  Team
+##  Team Members
 - Rahul Gajula – 2024BCS-022
 - Pathakota Zenith Reddy – 2024BCS-044
 - Akshitha Muttangi – 2024BCS-038
