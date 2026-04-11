@@ -111,3 +111,33 @@ _Add your images here_
 ```bash
 git clone https://github.com/Rahul2245/Simple-Network-Router-System
 cd Simple-Network-Router-System
+```
+
+2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+node server.js
+```
+3️⃣ Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+4️⃣ Run Application
+
+👉 http://localhost:3000
+
+##🎓 Learning Outcomes
+Understanding routing algorithms (Dijkstra, Bellman-Ford, Link State)
+Practical application of graph theory
+Visualization of network behavior
+
+---
+
+##👨‍💻 Team
+Rahul Gajula – 2024BCS-022
+Pathakota Zenith Reddy – 2024BCS-044
+Akshitha Muttangi – 2024BCS-038
+Raga Hasini Kalluri – 2024BCS-030
